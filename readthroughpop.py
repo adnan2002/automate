@@ -37,7 +37,6 @@ def fetch_code_from_email(q, pop_config):
             server = poplib.POP3_SSL(POP3_SERVER)
             server.user(USER_EMAIL)
             server.pass_(USER_PASS)
-            server.dele(1)
             num_messages, _ = server.stat()
             
             if num_messages > 0:
@@ -71,7 +70,6 @@ def fetch_code_from_email(q, pop_config):
                 
                 if pmi_security_code:
                     q.put(pmi_security_code) # Put the found code in the queue
-                    server.dele(1) # Mark for deletion
                     server.quit()
                     return # Exit the function and thread
 
@@ -102,9 +100,9 @@ def get_security_code():
     
     # Configuration for the email account
     pop_config = {
-        "server": "mail.almoalem.net",
-        "email": "test-user@almoalem.net",
-        "password": "Almoalem!23455"
+        "server": "pop.gmail.com",
+        "email": "cshdjxbehsbxus@gmail.com",
+        "password": "rfbrhkywipotchwu"
     }
 
     q = queue.Queue()
