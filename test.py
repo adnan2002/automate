@@ -7,8 +7,8 @@ from flask import Flask, jsonify, request
 # --- Configuration ---
 # It's recommended to use environment variables for sensitive data in a production environment
 IMAP_SERVER = "imap.gmail.com"
-EMAIL_ACCOUNT = "fsarhan46@gmail.com"
-PASSWORD = "jodmldviaukivjqm"
+EMAIL_ACCOUNT = "isa.salaman123@gmail.com"
+PASSWORD = "cuckludvsyptrpxo"
 MAILBOX = 'INBOX'
 
 # Time in seconds to poll for new emails before timing out the request

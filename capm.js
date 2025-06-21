@@ -386,40 +386,50 @@ async function loginAndFillForm(browser) {
 
 
 
+        console.log('[Script] Clicking the "Edit Name" button using page.evaluate()...');
         const editNameButton = "#main-layout > div > div.layout__content.layout__content-exam-details > div:nth-child(4) > div.col-md-8 > div:nth-child(4) > a";
-
-        await page.click(editNameButton);
-
-
         const editNameInput = "#nameOnCertificate_input";
 
-        await page.waitForSelector(editNameInput);
+        // This tells the browser to find the element and click it, bypassing Puppeteer's checks.
+        await page.evaluate((selector) => {
+            // The '?' is optional chaining, it prevents an error if the selector is not found.
+            document.querySelector(selector)?.click();
+        }, editNameButton);
 
+        // We still wait for the outcome to ensure the page is ready.
+        console.log('[Script] Waiting for edit input field to become visible...');
+        await page.waitForSelector(editNameInput, { visible: true });
+        console.log('[Script] Edit mode activated. Input field is visible.');
+
+
+        // --- The rest of your code remains the same ---
+        console.log('[Script] Reading current name value...');
         const currentVal = await page.$eval(editNameInput, el => el.value);
-
         const newVal = removeFirstWhitespace(currentVal);
 
+        console.log(`[Script] Modifying name to: "${newVal}"...`);
+        await page.click(editNameInput, { clickCount: 3 });
+        await page.keyboard.press('Backspace');
         await page.type(editNameInput, newVal);
 
+        console.log('[Script] Clicking submit to save the new name...');
         const submitName = "#main-layout > div > div.layout__content.layout__content-exam-details > div:nth-child(4) > div.col-md-8 > form > div.d-flex.align-items-end.mt-4 > button.ml-2.btn-md.btn.btn-primary";
-
-        await page.waitForSelector(submitName)
+        await page.waitForSelector(submitName);
         await page.click(submitName);
+        console.log('[Script] Name submitted.');
+
+
+        // --- Continue with the rest of your script ---
+        console.log('[Script] Checking agreement boxes...');
 
         const firstCheck = "#main-layout > div > div.layout__content.layout__content-exam-details > div:nth-child(6) > div.col-md-8 > form > div.form-group.mb-2 > div > div > div.p-checkbox-box.p-component";
-
-        await page.waitForSelector(firstCheck)
-
+        await page.waitForSelector(firstCheck, { visible: true });
         await page.click(firstCheck);
 
-
-
-        
         const secondCheck = "#main-layout > div > div.layout__content.layout__content-exam-details > div:nth-child(6) > div.col-md-8 > form > div:nth-child(2) > div > div > div.p-checkbox-box.p-component";
-
-        await page.waitForSelector(secondCheck)
-
+        await page.waitForSelector(secondCheck, { visible: true });
         await page.click(secondCheck);
+
 
         console.log('--- Course Dates filled. ---');
 
@@ -431,8 +441,6 @@ async function loginAndFillForm(browser) {
     } catch (error) {
         console.error('\n--- AN ERROR OCCURRED ---');
         console.error(error);
-        await page.screenshot({ path: 'error_screenshot.png' });
-        console.log('\nAn error screenshot has been saved as "error_screenshot.png"');
     }
 }
 

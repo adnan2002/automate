@@ -46,7 +46,7 @@ function shortenString(text) {
 const registrationDetails = {
     firstName: 'Adnan',
     lastName: 'Mohammed Redha Ali Sarhan',
-    email: 'adnan-user@almoalem.net',
+    email: 'isa.salaman123@gmail.com',
     password: 'Almoalem!23455',
     countryCode: 'BHR' 
 };
@@ -161,7 +161,7 @@ async function fillRegistrationForm() {
         console.log('The browser will remain open for debugging.');
     } finally {
         console.log('\n--- All tasks finished. The browser will remain open. ---');
-        // Intentionally keeping the browser open. To close, add `await browser.close();`
+        await browser.close();
     }
 }
 
