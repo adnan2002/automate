@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const axios = require('axios');
-const { loginToPMI } = require('./registerCAPM.js'); // <-- IMPORT THE LOGIN FUNCTION
+const { loginAndFillForm } = require('./capm.js'); // <-- IMPORT THE LOGIN FUNCTION
 
 puppeteer.use(StealthPlugin());
 
@@ -46,8 +46,8 @@ function shortenString(text) {
 const registrationDetails = {
     firstName: 'Adnan',
     lastName: 'Mohammed Redha Ali Sarhan',
-    email: 'fsarhan46@gmail.com',
-    password: 'i8":^&$24C`M',
+    email: 'adnan-user@almoalem.net',
+    password: 'Almoalem!23455',
     countryCode: 'BHR' 
 };
 
@@ -85,7 +85,7 @@ async function fillRegistrationForm() {
     const browser = await puppeteer.launch({
         headless: false,
         slowMo: 50,
-        args: ['--start-maximized']
+        args: ['--start-maximized','--no-sandbox', '--disable-setuid-sandbox']
     });
     
     const registrationPage = await browser.newPage();
@@ -151,7 +151,7 @@ async function fillRegistrationForm() {
 
 
         
-        await loginToPMI(browser);
+        await loginAndFillForm(browser);
         
         
 

@@ -100,9 +100,9 @@ def get_security_code():
     
     # Configuration for the email account
     pop_config = {
-        "server": "pop.gmail.com",
-        "email": "cshdjxbehsbxus@gmail.com",
-        "password": "rfbrhkywipotchwu"
+        "server": "mail.almoalem.net",
+        "email": "adnan-user@almoalem.net",
+        "password": "Almoalem!23455"
     }
 
     q = queue.Queue()
